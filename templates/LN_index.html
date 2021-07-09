@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Linear Regression visualization
+    </title>
+    <style>
+        .canvasdiv{
+                width: 600px;
+                height: 400px;
+                margin: auto;
+            }
+        body{
+            align-items: center;
+            height: 1500px;
+        }
+        canvas { 
+            border : 2px solid black; 
+            margin: auto;
+            }
+        input,h1{
+            margin: auto;
+            font-size: 20px;
+        }
+        form{
+            font-size: 20px;
+            align-items: center;
+            align-content: center;
+        }
+        @media only screen and (max-width: 628px) {
+    /* For mobile phones: */
+            .canvasdiv{
+                width: 100%;
+                margin: auto;
+            }
+            form, input, h1{
+            font-size: 14px;
+        }
+        }
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #333;
+        }
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          float: left;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #04AA6D;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/KMean">KMeans</a></li>
+            <li><a class="active" href="/Linear">Linear Regression</a></li>
+            <li><a href="/KNN">K Nearest Neighbor</a></li>
+          </ul>
+    </div>
+    <div style="height: 50px; width: 100%;"></div>
+    <div class="canvasdiv" id="content">
+        <canvas id="myCanvas"></canvas>
+    </div><br/>
+    <h1 id="h1"></h1><br/>
+    <form action="/LN_step" method="POST">
+        <div>
+            <input type="hidden" id="datapoint" name="datapoint" value=""/>
+            <label for="alpha"><b>Learning rate</b></label>
+            <input type="number" id="alpha" name="alpha" min="0.001" max="1" value="0.01" step="0.001"/><br>
+            <label for="K"><b>Training Linear Model</b></label>
+            <input onclick="fn1()" type="submit" id="submit" name="submit" value="Start"/>
+        </div>
+    </form>
+    <script type="text/javascript">
+    var canvas=document.getElementById("myCanvas");
+    var cntx=canvas.getContext("2d");
+    var panting=document.getElementById("content");
+    var pantingstyle=getComputedStyle(panting);
+    canvas.height=parseInt(pantingstyle.getPropertyValue("height"));
+    canvas.width=parseInt(pantingstyle.getPropertyValue("width"));
+    var datapoint=  document.getElementById("datapoint");  
+    var color_array=['red', 'blue', 'green','orange' ,'pink','purple','yellow'];
+
+    var mouse={x:0,y:0};
+    
+    var data=[];
+    centroid=[];
+
+    canvas.addEventListener('mousemove',function(e){
+        mouse.x=e.pageX-this.offsetLeft;
+        mouse.y=e.pageY-this.offsetTop;
+    },false);
+
+    canvas.addEventListener('mousedown',function(e){
+        console.log(mouse);
+        drawdata([mouse.x, mouse.y],"black");
+    },false);
+
+    function drawdata(point, color){
+        cntx.strokeStyle = color;
+        cntx.strokeRect(point[0], point[1], 5, 5);
+        data.push(point);
+        console.log(data);
+        cntx.strokeStyle = "black";
+    }
+
+    function drawcentroid(point, color){
+        cntx.strokeStyle = color;
+        cntx.strokeRect(point[0], point[1], 10, 10);
+        centroid.push(point);
+        cntx.strokeStyle = "black";
+    }
+
+    function fn1(){
+        datapoint.value="["+data.toString()+"]";
+        console.log(datapoint.value);
+    }
+    function toArray(x){
+        return JSON.parse(x);
+    }
+
+    var h1 = document.getElementById("h1");
+
+    var points=JSON.parse('{{inn}}');
+    console.log(points);
+    for (let i = 0; i < points.length; i++){
+        drawdata(points[i],'red');
+    }
+
+    console.log(color_array);
+    </script>
+</body>
+
+</html>

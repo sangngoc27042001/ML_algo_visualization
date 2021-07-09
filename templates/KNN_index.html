@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        KNN Classifier visualization
+    </title>
+    <style>
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #333;
+        }
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          float: left;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #04AA6D;
+        }
+        .canvasdiv{
+                width: 600px;
+                height: 400px;
+                margin: auto;
+            }
+        body{
+            align-items: center;
+            height: 1500px;
+        }
+        canvas { 
+            border : 2px solid black; 
+            margin: auto;
+            }
+        input,h1, select{
+            margin: auto;
+            font-size: 20px;
+        }
+        form{
+            font-size: 20px;
+            align-items: center;
+            align-content: center;
+        }
+        @media only screen and (max-width: 628px) {
+    /* For mobile phones: */
+            .canvasdiv{
+                width: 100%;
+                margin: auto;
+            }
+            form, input, h1, select{
+            font-size: 14px;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/KMean">KMeans</a></li>
+            <li><a href="/Linear">Linear Regression</a></li>
+            <li><a class="active" href="/KNN">K Nearest Neighbor</a></li>
+          </ul>
+    </div>
+    <div style="height: 50px; width: 100%;"></div>
+    <div class="canvasdiv" id="content">
+        <canvas id="myCanvas"></canvas>
+    </div><br/>
+    <h1 id="h1"></h1><br/>
+    <form action="/KNN_step" method="POST">
+        <div>
+            <input type="hidden" id="datapoint" name="datapoint" value=""/>
+            <input type="hidden" id="labels" name="labels" value=""/>
+            <label for="color_list"><b>Select color</b></label>
+            <select id="color_list"></select><br>
+            <label for="K"><b>Select K number</b></label>
+            <input type="number" name="K" value="1"><br>
+            <input onclick="fn1()" type="submit" id="submit" name="submit" value="Start"/>
+        </div>
+    </form>
+    <script type="text/javascript">
+    var canvas=document.getElementById("myCanvas");
+    var cntx=canvas.getContext("2d");
+    var panting=document.getElementById("content");
+    var pantingstyle=getComputedStyle(panting);
+    canvas.height=parseInt(pantingstyle.getPropertyValue("height"));
+    canvas.width=parseInt(pantingstyle.getPropertyValue("width"));
+    var datapoint=  document.getElementById("datapoint");  
+    var labels= document.getElementById("labels");
+
+    var color_array=['red', 'blue', 'green','orange' ,'pink','purple','brown'];  
+    var color_code={
+        'red':0, 'blue':1, 'green':2,'orange':3 ,'pink':4,'purple':5,'brown':6
+    } ;
+    var sel = document.getElementById('color_list');
+    for(var i = 0; i < color_array.length; i++) {
+        var opt = document.createElement('option');
+        opt.innerHTML = color_array[i];
+        opt.value = color_array[i];
+        opt.style.backgroundColor=color_array[i];
+        sel.appendChild(opt);
+    }
+
+    var mouse={x:0,y:0};
+    
+    var data=[];
+    var labels_=[]
+    centroid=[];
+
+    canvas.addEventListener('mousemove',function(e){
+        mouse.x=e.pageX-this.offsetLeft;
+        mouse.y=e.pageY-this.offsetTop;
+    },false);
+
+    canvas.addEventListener('mousedown',function(e){
+        console.log(mouse);
+        drawdata([mouse.x, mouse.y],sel.value);
+    },false);
+
+    function drawdata(point, color){
+        cntx.strokeStyle = color;
+        cntx.strokeRect(point[0], point[1], 5, 5);
+        data.push(point);
+        console.log(data);
+        labels_.push(color_code[color])
+        console.log(labels_);
+        cntx.strokeStyle = "black";
+    }
+
+    function fn1(){
+        datapoint.value="["+data.toString()+"]";
+        labels.value="["+labels_.toString()+"]";
+    }
+    function toArray(x){
+        return JSON.parse(x);
+    }
+
+    var h1 = document.getElementById("h1");
+
+    var points=JSON.parse('{{inn}}');
+    console.log(points);
+    for (let i = 0; i < points.length; i++){
+        drawdata(points[i],'red');
+    }
+
+    console.log(color_array);
+    </script>
+</body>
+
+</html>
