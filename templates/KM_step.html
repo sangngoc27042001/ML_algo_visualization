@@ -86,7 +86,7 @@
         <input type="hidden" id="random" name="random" value="no">
         <input onclick="fn2()" type="submit" value="CLEAR"><br>
         <input onclick="fn3()" type="submit" value="RANDOM CENTROID"><br>
-        <input onclick="fn1()" type="submit" value="NEXT">
+        <input type="submit" value="NEXT">
     </form>
     <script type="text/javascript">
     var canvas=document.getElementById("myCanvas");
@@ -128,10 +128,6 @@
     }
     function fn2(){
         document.getElementById("clear").value="yes";
-    }
-    function fn1(){
-        datapoint.value="["+data.toString()+"]";
-        console.log(datapoint.value);
     }
 
     var h1 = document.getElementById("h1");

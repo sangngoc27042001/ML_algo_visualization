@@ -83,7 +83,7 @@
         <input type="hidden" id="point" name="point" value="">
         <input type="hidden" id="clear" name="clear" value="no">
         <input onclick="fn2()" type="submit" value="CLEAR"><br>
-        <input onclick="fn1()" type="submit" value="PREDICT">
+        <input type="submit" value="PREDICT">
     </form>
     <script type="text/javascript">
     var canvas=document.getElementById("myCanvas");
@@ -120,14 +120,10 @@
         cntx.clearRect(0,0,10000,10000);
         initial_draw();
         cntx.strokeRect(point[0], point[1], 10, 10);
-        input=point
+        input=point;
+        datapoint.value="["+input.toString()+"]";
         console.log(input);
         cntx.strokeStyle = "black";
-    }
-    
-    function fn1(){
-        datapoint.value="["+input.toString()+"]";
-        console.log(datapoint.value);
     }
     function fn2(){
         document.getElementById("clear").value="yes";

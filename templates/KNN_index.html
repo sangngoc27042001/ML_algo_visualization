@@ -88,7 +88,7 @@
             <select id="color_list"></select><br>
             <label for="K"><b>Select K number</b></label>
             <input type="number" name="K" value="1"><br>
-            <input onclick="fn1()" type="submit" id="submit" name="submit" value="Start"/>
+            <input type="submit" id="submit" name="submit" value="Start"/>
         </div>
     </form>
     <script type="text/javascript">
@@ -137,13 +137,11 @@
         console.log(data);
         labels_.push(color_code[color])
         console.log(labels_);
+        datapoint.value="["+data.toString()+"]";
+        labels.value="["+labels_.toString()+"]";
         cntx.strokeStyle = "black";
     }
 
-    function fn1(){
-        datapoint.value="["+data.toString()+"]";
-        labels.value="["+labels_.toString()+"]";
-    }
     function toArray(x){
         return JSON.parse(x);
     }

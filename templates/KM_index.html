@@ -85,7 +85,7 @@
             <input type="hidden" id="datapoint" name="datapoint" value=""/>
             <label for="K"><b>Number K-means classes</b></label>
             <input type="number" name="K" value="1"><br>
-            <input onclick="fn1()" type="submit" id="submit" name="submit" value="Start"/>
+            <input type="submit" id="submit" name="submit" value="Start"/>
             
         </div>
     </form>
@@ -119,6 +119,7 @@
         cntx.strokeRect(point[0], point[1], 5, 5);
         data.push(point);
         console.log(data);
+        datapoint.value="["+data.toString()+"]";
         cntx.strokeStyle = "black";
     }
 
@@ -129,10 +130,6 @@
         cntx.strokeStyle = "black";
     }
 
-    function fn1(){
-        datapoint.value="["+data.toString()+"]";
-        console.log(datapoint.value);
-    }
     function toArray(x){
         return JSON.parse(x);
     }

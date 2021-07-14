@@ -86,7 +86,7 @@
         <input type="number" id="alpha" name="alpha" min="0.001" max="1" value="{{alpha}}" step="0.001"/><br>
         <input type="hidden" id="clear" name="clear" value="no">
         <input onclick="fn2()" type="submit" value="CLEAR"><br>
-        <input onclick="fn1()" type="submit" value="NEXT">
+        <input type="submit" value="NEXT">
     </form>
     <script type="text/javascript">
     var canvas=document.getElementById("myCanvas");
@@ -129,10 +129,6 @@
     }
     function fn2(){
         document.getElementById("clear").value="yes";
-    }
-    function fn1(){
-        datapoint.value="["+data.toString()+"]";
-        console.log(datapoint.value);
     }
 
     var h1 = document.getElementById("h1");
